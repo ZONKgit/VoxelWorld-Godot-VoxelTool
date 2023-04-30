@@ -1,0 +1,147 @@
+[gd_scene load_steps=14 format=3 uid="uid://ds2r2pkswmyk7"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_3pt40"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="2_hh6pj"]
+[ext_resource type="Script" path="res://scripts/interaction.gd" id="3_gpao7"]
+[ext_resource type="Texture2D" uid="uid://crbioians1ev3" path="res://assets/textures/crosshair.png" id="4_divmi"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="4_v2ogl"]
+[ext_resource type="Texture2D" uid="uid://6pnrqs8xndso" path="res://assets/textures/gui/inventory_bar.png" id="6_co1n7"]
+[ext_resource type="Texture2D" uid="uid://crp547k5kitx4" path="res://assets/textures/gui/inventory_bar_select.png" id="7_aqoj6"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_a54e2"]
+[ext_resource type="Texture2D" uid="uid://wtrrwknldlw2" path="res://assets/textures/gui/button.png" id="8_m64vf"]
+[ext_resource type="Texture2D" uid="uid://bw4831t0yb88j" path="res://assets/textures/gui/button_hover.png" id="10_o26or"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fadv2"]
+size = Vector3(1, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xuu8t"]
+size = Vector3(0.8, 1.5, 0.8)
+
+[sub_resource type="Theme" id="Theme_riaje"]
+HBoxContainer/constants/separation = 9
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_3pt40")
+
+[node name="model" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_fadv2")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_xuu8t")
+
+[node name="camera" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53973, 0)
+script = ExtResource("2_hh6pj")
+
+[node name="camera" type="Camera3D" parent="camera"]
+
+[node name="Marker3D" type="Marker3D" parent="camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.25498)
+
+[node name="VoxelViewer" type="VoxelViewer" parent="."]
+view_distance = 512
+
+[node name="interaction" type="Node" parent="."]
+script = ExtResource("3_gpao7")
+
+[node name="Timer" type="Timer" parent="interaction"]
+wait_time = 0.001
+
+[node name="hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_v2ogl")
+
+[node name="TextureRect" type="TextureRect" parent="hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_divmi")
+
+[node name="debug_info" type="Label" parent="hud"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 14.0
+offset_right = 324.0
+offset_bottom = 408.0
+text = "daw"
+
+[node name="inventory_bar" type="TextureRect" parent="hud"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -75.0
+offset_right = 365.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_riaje")
+texture = ExtResource("6_co1n7")
+
+[node name="inventory_bar_select" type="TextureRect" parent="hud/inventory_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -600.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_aqoj6")
+
+[node name="pause_menu" type="Control" parent="."]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_a54e2")
+
+[node name="back_to_game_button" type="TextureButton" parent="pause_menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -185.0
+offset_right = 270.0
+offset_bottom = -131.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("8_m64vf")
+texture_hover = ExtResource("10_o26or")
+stretch_mode = 0
+
+[node name="button_label" type="Label" parent="pause_menu/back_to_game_button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "back to game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="interaction/Timer" to="interaction" method="_on_timer_timeout"]
+[connection signal="pressed" from="pause_menu/back_to_game_button" to="pause_menu" method="_on_back_to_game_button_pressed"]

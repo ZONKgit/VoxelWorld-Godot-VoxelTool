@@ -1,0 +1,344 @@
+[gd_scene load_steps=23 format=3 uid="uid://ds2r2pkswmyk7"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_3pt40"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="2_hh6pj"]
+[ext_resource type="Script" path="res://scripts/interaction.gd" id="3_gpao7"]
+[ext_resource type="ArrayMesh" uid="uid://b5alxdv1rf7te" path="res://assets/models/hand.obj" id="3_kbsv4"]
+[ext_resource type="Texture2D" uid="uid://crbioians1ev3" path="res://assets/textures/crosshair.png" id="4_divmi"]
+[ext_resource type="Texture2D" uid="uid://b0xyajah4dnpn" path="res://assets/textures/entity/steve.png" id="4_s7umu"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="4_v2ogl"]
+[ext_resource type="Texture2D" uid="uid://6pnrqs8xndso" path="res://assets/textures/gui/inventory_bar.png" id="6_co1n7"]
+[ext_resource type="Texture2D" uid="uid://crp547k5kitx4" path="res://assets/textures/gui/inventory_bar_select.png" id="7_aqoj6"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_a54e2"]
+[ext_resource type="Texture2D" uid="uid://wtrrwknldlw2" path="res://assets/textures/gui/button.png" id="8_m64vf"]
+[ext_resource type="Texture2D" uid="uid://b1wnp5wd1d5p2" path="res://assets/textures/gui/inventory.png" id="10_3tqws"]
+[ext_resource type="Texture2D" uid="uid://bw4831t0yb88j" path="res://assets/textures/gui/button_hover.png" id="10_o26or"]
+[ext_resource type="Script" path="res://scripts/inventory.gd" id="11_ofgrg"]
+[ext_resource type="PackedScene" uid="uid://b7eqgk7swfonj" path="res://scenes/inventory_object.tscn" id="12_3xw6n"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fadv2"]
+size = Vector3(1, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xuu8t"]
+size = Vector3(0.8, 1.5, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_evoak"]
+albedo_texture = ExtResource("4_s7umu")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="Animation" id="Animation_ej22t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.451, -0.583, -0.462)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.247837, -0.415388, -0.66497)]
+}
+
+[sub_resource type="Animation" id="Animation_shrng"]
+resource_name = "destroing_block"
+length = 0.35
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.451, -0.583, -0.462), Vector3(0.451, -0.583, -0.462), Vector3(0.451, -0.583, -0.462)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.247837, -0.415388, -0.66497), Vector3(-0.0331613, -0.235619, -0.66497), Vector3(0.247837, -0.415388, -0.66497)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fb1li"]
+_data = {
+"RESET": SubResource("Animation_ej22t"),
+"destroing_block": SubResource("Animation_shrng")
+}
+
+[sub_resource type="Theme" id="Theme_riaje"]
+HBoxContainer/constants/separation = 9
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_3pt40")
+
+[node name="model" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_fadv2")
+
+[node name="collision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_xuu8t")
+
+[node name="camera" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53973, 0)
+script = ExtResource("2_hh6pj")
+
+[node name="camera" type="Camera3D" parent="camera"]
+
+[node name="Marker3D" type="Marker3D" parent="camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.25498)
+
+[node name="hand" type="MeshInstance3D" parent="camera"]
+transform = Transform3D(0.0781096, 0.0486662, -0.0391215, -0.0598182, 0.0762891, -0.0245308, 0.0179072, 0.0425627, 0.0887004, 0.451, -0.583, -0.462)
+mesh = ExtResource("3_kbsv4")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_evoak")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="camera/hand"]
+libraries = {
+"": SubResource("AnimationLibrary_fb1li")
+}
+
+[node name="VoxelViewer" type="VoxelViewer" parent="."]
+view_distance = 512
+
+[node name="interaction" type="Node" parent="."]
+script = ExtResource("3_gpao7")
+
+[node name="Timer" type="Timer" parent="interaction"]
+wait_time = 0.001
+
+[node name="place_timer" type="Timer" parent="interaction"]
+wait_time = 0.1
+one_shot = true
+
+[node name="hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_v2ogl")
+
+[node name="crosshair" type="TextureRect" parent="hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_divmi")
+
+[node name="debug_info" type="Label" parent="hud"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 14.0
+offset_right = 324.0
+offset_bottom = 408.0
+text = "daw"
+
+[node name="inventory_bar" type="TextureRect" parent="hud"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -75.0
+offset_right = 365.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_riaje")
+texture = ExtResource("6_co1n7")
+
+[node name="inventory_bar_select" type="TextureRect" parent="hud/inventory_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -600.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_aqoj6")
+
+[node name="inventory" type="TextureRect" parent="hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_3tqws")
+script = ExtResource("11_ofgrg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="hud/inventory"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 224.0
+offset_right = 446.0
+offset_bottom = 366.0
+
+[node name="GridContainer" type="GridContainer" parent="hud/inventory/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 6
+columns = 9
+
+[node name="inventory_object" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object2" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object3" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object4" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object5" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object6" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object7" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object8" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object9" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object10" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object11" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object12" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object13" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object14" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object15" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object16" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object17" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object18" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object19" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object20" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object21" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object22" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object23" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object24" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object25" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object26" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="inventory_object27" parent="hud/inventory/VBoxContainer/GridContainer" instance=ExtResource("12_3xw6n")]
+layout_mode = 2
+
+[node name="pause_menu" type="Control" parent="."]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_a54e2")
+
+[node name="back_to_game_button" type="TextureButton" parent="pause_menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -185.0
+offset_right = 270.0
+offset_bottom = -131.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("8_m64vf")
+texture_hover = ExtResource("10_o26or")
+stretch_mode = 0
+
+[node name="button_label" type="Label" parent="pause_menu/back_to_game_button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "back to game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="interaction/Timer" to="interaction" method="_on_timer_timeout"]
+[connection signal="pressed" from="pause_menu/back_to_game_button" to="pause_menu" method="_on_back_to_game_button_pressed"]

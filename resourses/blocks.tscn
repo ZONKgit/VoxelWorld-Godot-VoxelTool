@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://brwkqo7grsvda"]
+
+[ext_resource type="ArrayMesh" uid="uid://cerjkgq6ulapb" path="res://assets/models/grass1.obj" id="1_2ffv4"]
+[ext_resource type="Shader" uid="uid://dlm16qh1hkxxj" path="res://resourses/shaders/grass_shader.tres" id="2_t0w64"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_72uqv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hefsl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xdroo"]
+render_priority = 0
+shader = ExtResource("2_t0w64")
+
+[node name="blocks" type="Node3D"]
+
+[node name="grass_block" type="StaticBody3D" parent="."]
+
+[node name="mesh" type="MeshInstance3D" parent="grass_block"]
+mesh = SubResource("BoxMesh_72uqv")
+
+[node name="collision" type="CollisionShape3D" parent="grass_block"]
+shape = SubResource("BoxShape3D_hefsl")
+
+[node name="grass" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_2ffv4")
+surface_material_override/0 = SubResource("ShaderMaterial_xdroo")

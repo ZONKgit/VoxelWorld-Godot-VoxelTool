@@ -1,0 +1,85 @@
+[gd_scene load_steps=17 format=3 uid="uid://rpnrsve1vyxj"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_h48uq"]
+[ext_resource type="Texture2D" uid="uid://41roq5fiiib4" path="res://assets/textures/cursor.png" id="3_ehepr"]
+[ext_resource type="PackedScene" uid="uid://ds2r2pkswmyk7" path="res://scenes/player.tscn" id="3_mn1it"]
+[ext_resource type="ArrayMesh" uid="uid://cerjkgq6ulapb" path="res://assets/models/grass1.obj" id="3_yxbhk"]
+[ext_resource type="Shader" path="res://resourses/shaders/grass_shader.gdshader" id="4_30dep"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_b1vak"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_v3ca5"]
+sky_material = SubResource("ProceduralSkyMaterial_b1vak")
+
+[sub_resource type="Environment" id="Environment_naa48"]
+background_mode = 2
+sky = SubResource("Sky_v3ca5")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="VoxelGeneratorScript" id="VoxelGeneratorScript_6a7nc"]
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_s8r0i"]
+voxel_name = &"grass_voxel"
+color = Color(0.0352941, 0.709804, 0, 1)
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+collision_enabled_0 = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iccoe"]
+render_priority = 0
+shader = ExtResource("4_30dep")
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_gvof4"]
+geometry_type = 2
+custom_mesh = ExtResource("3_yxbhk")
+material_override_0 = SubResource("ShaderMaterial_iccoe")
+collision_enabled_0 = false
+
+[sub_resource type="VoxelBlockyLibrary" id="VoxelBlockyLibrary_g4vah"]
+voxels/1 = SubResource("VoxelBlockyModel_s8r0i")
+voxels/2 = SubResource("VoxelBlockyModel_gvof4")
+
+[sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_pgqja"]
+library = SubResource("VoxelBlockyLibrary_g4vah")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dy3dk"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_ehepr")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ie26k"]
+material = SubResource("StandardMaterial3D_dy3dk")
+size = Vector3(1.01, 1.01, 1.01)
+
+[node name="world" type="Node3D"]
+script = ExtResource("1_h48uq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_naa48")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="player" parent="." instance=ExtResource("3_mn1it")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+
+[node name="terrain" type="VoxelTerrain" parent="."]
+generator = SubResource("VoxelGeneratorScript_6a7nc")
+mesher = SubResource("VoxelMesherBlocky_pgqja")
+
+[node name="cursor" type="MeshInstance3D" parent="terrain"]
+mesh = SubResource("BoxMesh_ie26k")
+skeleton = NodePath("../..")

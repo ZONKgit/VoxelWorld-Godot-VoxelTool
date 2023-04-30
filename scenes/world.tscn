@@ -1,0 +1,276 @@
+[gd_scene load_steps=38 format=3 uid="uid://rpnrsve1vyxj"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_h48uq"]
+[ext_resource type="Texture2D" uid="uid://41roq5fiiib4" path="res://assets/textures/cursor.png" id="3_ehepr"]
+[ext_resource type="PackedScene" uid="uid://ds2r2pkswmyk7" path="res://scenes/player.tscn" id="3_mn1it"]
+[ext_resource type="Script" path="res://scripts/terrain_generator.gd" id="3_ybohp"]
+[ext_resource type="ArrayMesh" uid="uid://cerjkgq6ulapb" path="res://assets/models/grass1.obj" id="3_yxbhk"]
+[ext_resource type="Shader" path="res://resourses/shaders/grass_shader.gdshader" id="4_30dep"]
+[ext_resource type="Shader" uid="uid://b1kg247ppjwyu" path="res://resourses/shaders/leaves_shader.tres" id="5_wm2t4"]
+[ext_resource type="Texture2D" path="D://Desktop/GodotVoxelTool/Projects/VoxelWorld/assets/textures/blocks/double_plant_grass_top.png" id="7_kw6r0"]
+[ext_resource type="Shader" uid="uid://4vn3tp113mgt" path="res://resourses/shaders/2d_grass_shader.tres" id="8_n2wwl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_b1vak"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_v3ca5"]
+sky_material = SubResource("ProceduralSkyMaterial_b1vak")
+
+[sub_resource type="Environment" id="Environment_naa48"]
+background_mode = 2
+sky = SubResource("Sky_v3ca5")
+tonemap_mode = 2
+glow_enabled = true
+fog_light_color = Color(0.196078, 0.537255, 1, 1)
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.207843, 0.435294, 1, 1)
+
+[sub_resource type="VoxelGeneratorScript" id="VoxelGeneratorScript_8kydd"]
+script = ExtResource("3_ybohp")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwc38"]
+albedo_color = Color(0, 0.615686, 0.0235294, 1)
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_s8r0i"]
+voxel_name = &"grass_voxel"
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+material_override_0 = SubResource("StandardMaterial3D_gwc38")
+collision_enabled_0 = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iccoe"]
+render_priority = 0
+shader = ExtResource("4_30dep")
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_gvof4"]
+voxel_name = &"grass"
+geometry_type = 2
+custom_mesh = ExtResource("3_yxbhk")
+material_override_0 = SubResource("ShaderMaterial_iccoe")
+collision_enabled_0 = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gfbw"]
+albedo_color = Color(0.635294, 0.419608, 0.0901961, 1)
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_erj2l"]
+voxel_name = &"oak_voxel"
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+material_override_0 = SubResource("StandardMaterial3D_0gfbw")
+collision_enabled_0 = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bwg1b"]
+render_priority = 0
+shader = ExtResource("5_wm2t4")
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_ckd2q"]
+voxel_name = &"oak_leaves_voxel"
+color = Color(0.894118, 0.243137, 0.85098, 1)
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+material_override_0 = SubResource("ShaderMaterial_bwg1b")
+collision_enabled_0 = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqqg7"]
+albedo_color = Color(0.556863, 0.556863, 0.556863, 1)
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_2mnwy"]
+voxel_name = &"stone"
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+material_override_0 = SubResource("StandardMaterial3D_cqqg7")
+collision_enabled_0 = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ab0uf"]
+albedo_color = Color(0.678431, 0.662745, 0, 1)
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_dw2ac"]
+voxel_name = &"sand"
+color = Color(0.694118, 0.690196, 0, 1)
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+material_override_0 = SubResource("StandardMaterial3D_ab0uf")
+collision_enabled_0 = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8mfy"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.0823529, 0.321569, 1, 0.576471)
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_g7my1"]
+voxel_name = &"water"
+geometry_type = 1
+collision_aabbs = Array[AABB]([AABB(0, 0, 0, 1, 1, 1)])
+cube_geometry_padding_y = null
+cube_tiles_left = Vector2(0, 0)
+cube_tiles_right = Vector2(0, 0)
+cube_tiles_bottom = Vector2(0, 0)
+cube_tiles_top = Vector2(0, 0)
+cube_tiles_back = Vector2(0, 0)
+cube_tiles_front = Vector2(0, 0)
+material_override_0 = SubResource("StandardMaterial3D_p8mfy")
+collision_enabled_0 = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_86m13"]
+resource_name = "Material"
+albedo_color = Color(0.8, 0.8, 0.8, 1)
+albedo_texture = ExtResource("7_kw6r0")
+metallic = 0.5
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4bwyc"]
+_surfaces = [{
+"aabb": AABB(0, 0, 0.5, 1, 1, 1.00136e-05),
+"attribute_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
+"material": SubResource("StandardMaterial3D_86m13"),
+"name": "Material",
+"primitive": 3,
+"vertex_count": 6,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 255, 255, 255, 0, 0, 255, 191)
+}, {
+"aabb": AABB(0.5, 0, 0, 1.00136e-05, 1, 1),
+"attribute_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 2, 0, 1, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_86m13"),
+"name": "Material",
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 127, 255, 255, 255, 255, 0, 0, 0, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 255, 255, 127, 255, 255, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 0, 0, 255, 255, 255, 127, 255, 255, 255, 255, 0, 0, 0, 63, 0, 0, 128, 63, 0, 0, 128, 63, 255, 255, 255, 127, 255, 255, 255, 255)
+}, {
+"aabb": AABB(0.485414, 0, 0, 1.00136e-05, 1, 1.00001),
+"attribute_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 2, 0, 1, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_86m13"),
+"name": "Material",
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(47, 136, 248, 62, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 255, 127, 255, 127, 255, 191, 47, 136, 248, 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 127, 255, 127, 255, 191, 47, 136, 248, 62, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 255, 127, 255, 127, 255, 191, 47, 136, 248, 62, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 255, 127, 255, 127, 255, 191)
+}, {
+"aabb": AABB(0, 0, 0.5, 1.00001, 1, 1.00136e-05),
+"attribute_data": PackedByteArray(0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 5, 0),
+"material": SubResource("StandardMaterial3D_86m13"),
+"name": "Material",
+"primitive": 3,
+"vertex_count": 6,
+"vertex_data": PackedByteArray(0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 63, 255, 127, 255, 127, 255, 255, 255, 191)
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_phm5b"]
+render_priority = 0
+shader = ExtResource("8_n2wwl")
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_ygugp"]
+voxel_name = &"double_plant_grass_top"
+geometry_type = 2
+custom_mesh = SubResource("ArrayMesh_4bwyc")
+material_override_0 = SubResource("ShaderMaterial_phm5b")
+material_override_1 = SubResource("ShaderMaterial_phm5b")
+material_override_2 = SubResource("ShaderMaterial_phm5b")
+material_override_3 = SubResource("ShaderMaterial_phm5b")
+collision_enabled_0 = false
+collision_enabled_1 = false
+collision_enabled_2 = false
+collision_enabled_3 = false
+
+[sub_resource type="VoxelBlockyLibrary" id="VoxelBlockyLibrary_g4vah"]
+voxels/1 = SubResource("VoxelBlockyModel_s8r0i")
+voxels/2 = SubResource("VoxelBlockyModel_gvof4")
+voxels/3 = SubResource("VoxelBlockyModel_erj2l")
+voxels/4 = SubResource("VoxelBlockyModel_ckd2q")
+voxels/5 = SubResource("VoxelBlockyModel_2mnwy")
+voxels/6 = SubResource("VoxelBlockyModel_dw2ac")
+voxels/7 = SubResource("VoxelBlockyModel_g7my1")
+voxels/8 = SubResource("VoxelBlockyModel_ygugp")
+
+[sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_pgqja"]
+library = SubResource("VoxelBlockyLibrary_g4vah")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dy3dk"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_ehepr")
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ie26k"]
+material = SubResource("StandardMaterial3D_dy3dk")
+size = Vector3(1.01, 1.01, 1.01)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_45spw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ip1r5"]
+noise = SubResource("FastNoiseLite_45spw")
+
+[node name="world" type="Node3D"]
+script = ExtResource("1_h48uq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_naa48")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="player" parent="." instance=ExtResource("3_mn1it")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+
+[node name="terrain" type="VoxelTerrain" parent="."]
+generator = SubResource("VoxelGeneratorScript_8kydd")
+mesher = SubResource("VoxelMesherBlocky_pgqja")
+run_stream_in_editor = false
+
+[node name="cursor" type="MeshInstance3D" parent="terrain"]
+mesh = SubResource("BoxMesh_ie26k")
+skeleton = NodePath("../..")
+
+[node name="TextEdit" type="TextureRect" parent="."]
+visible = false
+offset_right = 8.0
+offset_bottom = 8.0
+texture = SubResource("NoiseTexture2D_ip1r5")

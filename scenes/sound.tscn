@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dscp67g2b8rlc"]
+
+[ext_resource type="Script" path="res://scripts/sound.gd" id="1_5fwyg"]
+
+[node name="sound" type="AudioStreamPlayer3D"]
+script = ExtResource("1_5fwyg")
+
+[node name="destroy_timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="destroy_timer" to="." method="_on_destroy_timer_timeout"]
